@@ -397,6 +397,7 @@ st.title(":bar_chart: Lebensmittelabfall Dashboard")
 st.markdown("##")
 
 st.subheader(f"Menge Lebensmittelabfall: {Menge_Lebensmittelabfall} kg")
+st.write('Zeitraum: ',date ,'-', date2)
 st.markdown("""---""")  
 left_column, right_column = st.columns(2)
 
