@@ -53,11 +53,12 @@ df = get_data_from_excel()
 
 df_kennzahlen = get_data_from_excel2()
 
+today = datetime.date.today()
 
 # ---- SIDEBAR ----
 #Zeitraumfilter
 date = st.sidebar.date_input('Startdatum', datetime.date(2021,9,1))
-date2 = st.sidebar.date_input('Enddatum', datetime.date(2021,9,30))
+date2 = st.sidebar.date_input('Enddatum', today)
 mask = (df['date'] >= date) & (df['date'] <= date2)
 df = df.loc[mask]
 
