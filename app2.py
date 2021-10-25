@@ -6,8 +6,7 @@ import streamlit as st  # pip install streamlit
 import plotly.graph_objects as go
 import datetime
 import numpy as np
-import locale
-locale.setlocale(locale.LC_ALL, 'de_DE.utf-8')
+
 
 
 
