@@ -1,10 +1,3 @@
-# @Email:  contact@pythonandvba.com
-# @Website:  https://pythonandvba.com
-# @YouTube:  https://youtube.com/c/CodingIsFun
-# @Project:  Lebensmittelabfall Dashboard w/ Streamlit
-
-
-
 from re import template
 import pandas as pd
 import plotly  # pip install pandas openpyxl
@@ -13,6 +6,8 @@ import streamlit as st  # pip install streamlit
 import plotly.graph_objects as go
 import datetime
 import numpy as np
+import locale
+locale.setlocale(locale.LC_ALL, 'de_DE.utf-8')
 
 
 
@@ -27,7 +22,7 @@ def get_data_from_excel():
         engine="openpyxl",
         sheet_name="Abfalldokumentation",
   #      skiprows=0,
-        usecols="A:L",
+        usecols="A:M",
   #      nrows=1000,
     )
     # Add 'hour' column to dataframe
@@ -90,11 +85,7 @@ Grund = st.sidebar.multiselect(
     default=df["Grund"].unique()
 )
 
-KW = st.sidebar.multiselect(
-    "Auswahl der KW:",
-    options=df_kennzahlen["KW"].unique(),
-    default=df_kennzahlen["KW"].unique()
-)
+
 
 
 
@@ -110,7 +101,7 @@ df['date'] = pd.to_datetime(df['date'], errors ='coerce')
 
 
 df_selection_kennzahlen = df_kennzahlen.query(
-   "BU == @BU & KW ==@KW"
+   "BU == @BU"
 )
 #Sunburst Gründe
 #Definition Variable
@@ -195,39 +186,15 @@ maxdepth=3, height=1000, width=1300
 treemap.update_traces(textinfo='label+percent entry',textfont_size=20, hovertemplate='Menge %{value} kg <br>Prozent Gesamt %{percentRoot:.2f}',)
 treemap.update_layout(
     margin=dict(l=0, r=0, t=0, b=0),
-    separators=",.",
-    
+    separators=",.",    
 )
-
-
-
-# treemap = px.treemap(df_selection, path=[px.Constant(""), 'BU', 'Symptom', 'Grund', 'Produktgruppe'],branchvalues="total", values='Menge',color="Symptom",maxdepth=2,
-    
-# )
-# #treemap.data[0].textinfo = 'label+text+percent entry' 
-
-# treemap.update_layout(
-#     margin = dict(t=50, l=25, r=25, b=25),
-#     separators=",.", 
-    
-    
-#     )
-# treemap.update_traces(
-#     textfont_size=20,
-#     textinfo='label+percent entry'
-# )
-
-# treemap.data[0].hovertemplate = '%{value} kg <br>%{percentRoot} '
-
-
-
-
-
-
 # TOP KPI's
-
 Menge_Lebensmittelabfall = int(df_selection["Menge"].sum())
+Kosten_Lebensmittelabfall = int(df_selection["Kosten"].sum())
+Entsorgungskosten = Menge_Lebensmittelabfall * 0.13 
 
+KostenIntervall1 = round(Kosten_Lebensmittelabfall + Entsorgungskosten,0)
+KostenIntervall2 = round(Kosten_Lebensmittelabfall * 1.25 + Entsorgungskosten,0)
 
 # Gesamtlebensmittelabfallquote [BAR CHART]
 gesamtlebensmittelabfall = (
@@ -243,13 +210,9 @@ gesamtlebensmittelabfall = px.bar(
         "BU2":"#FFA15A",
         "BU3":"#636EFA",
         "BU4":"#AB63FA",    
-    }
-    
-    
-    ,
+    },
     barmode='group',
-    template="plotly_white",
-    
+    template="plotly_white",    
 )
 gesamtlebensmittelabfall.update_layout(
     plot_bgcolor="rgba(0,0,0,0)",
@@ -260,8 +223,7 @@ gesamtlebensmittelabfall.update_traces(
     selector=dict(type='bar'),
     hovertemplate=' %{value} %',
     texttemplate='%{value:.2f}',
-    textposition='outside'
-   
+    textposition='outside'   
 )
 # Maschinenabfallquote [BAR CHART]
 maschinenabfall = (
@@ -293,8 +255,6 @@ maschinenabfall.update_traces(
     texttemplate='%{value:.2f}',
     textposition='outside'
 )
-
-
 # zeitlicher Verlauf [BAR CHART]
 verlauf = (
     df_selection.groupby(by=["KW"]).sum()[["Menge"]].sort_values(by="Menge")
@@ -309,8 +269,7 @@ verlauf = px.bar(
 verlauf.update_layout(
     plot_bgcolor="rgba(0,0,0,0)",
     xaxis=(dict(showgrid=False)),
-    separators=",."
-    
+    separators=",."    
 )
 verlauf.update_traces(    
     selector=dict(type='bar'),
@@ -318,8 +277,6 @@ verlauf.update_traces(
     texttemplate='%{value}',
     textposition='outside',
 )
-
-
 # Lebensmittelabfall BY Symptom [BAR CHART]
 Lebensmittelabfall_by_product_line = (
     df_selection.groupby(by=["Symptom"]).sum()[["Menge"]].sort_values(by="Menge")
@@ -396,7 +353,9 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 st.title(":bar_chart: Lebensmittelabfall Dashboard")
 st.markdown("##")
 
-st.subheader(f"Menge Lebensmittelabfall: {Menge_Lebensmittelabfall} kg")
+st.subheader(f"Menge Lebensmittelabfall: {Menge_Lebensmittelabfall:n} kg")
+
+st.subheader(f"verbundene Kosten: {KostenIntervall1:n} € - {KostenIntervall2:n} €")
 st.write('Zeitraum: ',date ,'-', date2)
 st.markdown("""---""")  
 left_column, right_column = st.columns(2)
