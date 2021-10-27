@@ -265,6 +265,7 @@ verlauf = px.bar(
     y="Menge",
     color_discrete_sequence=["#0083B8"] * len(verlauf),
     template="plotly_white",
+    labels={"Menge":"Menge in kg"}
 )
 verlauf.update_layout(
     plot_bgcolor="rgba(0,0,0,0)",
@@ -413,8 +414,6 @@ st.markdown("""---""")
 st.title("Rohdaten")
 raw_data = df_selection.replace({'nein': ""})
 raw_data
-
-
 
 
 
