@@ -128,7 +128,7 @@ df_sunburst = pd.DataFrame(
     dict(a=a, b=b, c=c, d=d , e=e ,f=f, g=g , z=z , zz=zz , zzz=zzz ,menge=menge)
 )
 
-gesamt_grund = px.sunburst(df_sunburst, path=['z', 'b', 'c','g','d','e','f'], values="menge",
+gesamt_grund = px.sunburst(df_sunburst, path=['z', 'b', 'c' ,'d'], values="menge",
 
 
 maxdepth=2
@@ -253,6 +253,38 @@ maschinenabfall.update_traces(
     selector=dict(type='bar'),
     hovertemplate=' %{value} %',
     texttemplate='%{value:.2f}',
+    textposition='outside'
+)
+
+produktionsmenge = (
+    df_selection_kennzahlen.groupby(by=["KW"]).sum()[["Produzierte Menge in KG"]].sort_values(by="Produzierte Menge in KG")
+)
+produktionsmenge = px.line(
+    df_selection_kennzahlen,    
+    x="KW",
+    y="Produzierte Menge in KG", 
+    color="BU",
+    color_discrete_map={
+        "BU1":"#EF553B",
+        "BU2":"#FFA15A",
+        "BU3":"#636EFA",
+        "BU4":"#AB63FA",    
+    },
+    #barmode='group',
+  
+    template="plotly_white",
+)
+produktionsmenge.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=(dict(showgrid=False)),
+    separators=",.",
+    height=700, width=1500
+
+)
+produktionsmenge.update_traces(    
+    selector=dict(type='bar'),
+    hovertemplate=' %{value} ',
+    
     textposition='outside'
 )
 # zeitlicher Verlauf [BAR CHART]
@@ -416,4 +448,6 @@ raw_data = df_selection.replace({'nein': ""})
 raw_data
 
 
-
+st.markdown("""---""")
+st.title("Produktionsmengen")
+st.plotly_chart(produktionsmenge)
