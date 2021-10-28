@@ -170,7 +170,7 @@ produkte.update_layout(
     separators=",."
 )
 
-treemap = px.treemap(df_sunburst, path=['a', 'd','b','e','f'], values="menge",
+treemap = px.treemap(df_sunburst, path=['a','b','c','d','e','f'], values="menge",
 color="a",
     color_discrete_map={
         "BU1":"#EF553B",
