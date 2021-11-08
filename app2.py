@@ -22,7 +22,7 @@ def get_data_from_excel():
         engine="openpyxl",
         sheet_name="Abfalldokumentation",
   #      skiprows=0,
-        usecols="A:M",
+        usecols="A:V",
   #      nrows=1000,
     )
     # Add 'hour' column to dataframe
