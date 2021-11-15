@@ -200,7 +200,7 @@ KostenIntervall2 = round(Kosten_Lebensmittelabfall * 1.25 + Entsorgungskosten,0)
 gesamtlebensmittelabfall = (
     df_selection_kennzahlen.groupby(by=["KW"]).sum()[["Gesamtlebensmittelabfallquote"]].sort_values(by="Gesamtlebensmittelabfallquote")
 )
-gesamtlebensmittelabfall = px.bar(
+gesamtlebensmittelabfall = px.line(
     df_selection_kennzahlen,    
     x="KW",
     y="Gesamtlebensmittelabfallquote",   
@@ -211,7 +211,7 @@ gesamtlebensmittelabfall = px.bar(
         "BU3":"#636EFA",
         "BU4":"#AB63FA",    
     },
-    barmode='group',
+    #barmode='group',
     template="plotly_white",    
 )
 gesamtlebensmittelabfall.update_layout(
