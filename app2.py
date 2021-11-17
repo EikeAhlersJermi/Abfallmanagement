@@ -52,7 +52,7 @@ today = datetime.date.today()
 
 # ---- SIDEBAR ----
 #Zeitraumfilter
-date = st.sidebar.date_input('Startdatum', datetime.date(2021,9,1))
+date = st.sidebar.date_input('Startdatum', datetime.date(2021,8,30))
 date2 = st.sidebar.date_input('Enddatum', today)
 mask = (df['date'] >= date) & (df['date'] <= date2)
 df = df.loc[mask]
@@ -164,13 +164,13 @@ produkte = px.sunburst(df_sunburst, path=['zzz', 'd','e', 'b','c','f'], values="
 
 maxdepth=2
 )
-produkte.update_traces(textinfo='label+percent entry',textfont_size=20, hovertemplate='%{value} kg',)
+produkte.update_traces(textinfo='label+percent entry',textfont_size=15, hovertemplate='%{value} kg',)
 produkte.update_layout(
     margin=dict(l=20, r=350, t=40, b=40),
     separators=",."
 )
 
-treemap = px.treemap(df_sunburst, path=['a','b','c','d','e','f'], values="menge",
+treemap = px.treemap(df_sunburst, path=['a','b','c'], values="menge",
 color="a",
     color_discrete_map={
         "BU1":"#EF553B",
@@ -180,10 +180,10 @@ color="a",
         "Verkauf":'#90ee90',
         "Rest": '#808080'
     },
-maxdepth=3, height=1000, width=1300
+maxdepth=3, height=900, width=1200
 )
 
-treemap.update_traces(textinfo='label+percent entry',textfont_size=20, hovertemplate='Menge %{value} kg <br>Prozent Gesamt %{percentRoot:.2f}',)
+treemap.update_traces(textinfo='label+percent entry', hovertemplate='Menge %{value} kg <br>Prozent Gesamt %{percentRoot:.2f}',)
 treemap.update_layout(
     margin=dict(l=0, r=0, t=0, b=0),
     separators=",.",    
