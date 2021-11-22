@@ -170,7 +170,7 @@ produkte.update_layout(
     separators=",."
 )
 
-treemap = px.treemap(df_sunburst, path=['a','b','c'], values="menge",
+treemap = px.treemap(df_sunburst, path=['a','c','e'], values="menge",
 color="a",
     color_discrete_map={
         "BU1":"#EF553B",
@@ -180,7 +180,7 @@ color="a",
         "Verkauf":'#90ee90',
         "Rest": '#808080'
     },
-maxdepth=3, height=900, width=1200
+maxdepth=2, height=900, width=1200
 )
 
 treemap.update_traces(textinfo='label+percent entry', hovertemplate='Menge %{value} kg <br>Prozent Gesamt %{percentRoot:.2f}',)
