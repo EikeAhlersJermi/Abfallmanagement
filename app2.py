@@ -183,7 +183,7 @@ color="a",
 maxdepth=2, height=900, width=1200
 )
 
-treemap.update_traces(textinfo='label+percent entry', hovertemplate='Menge %{value} kg <br>Prozent Gesamt %{percentRoot:.2f}',)
+treemap.update_traces(textinfo='label+percent entry',textfont_size=15, hovertemplate='Menge %{value} kg <br>Prozent Gesamt %{percentRoot:.2f}',)
 treemap.update_layout(
     margin=dict(l=0, r=0, t=0, b=0),
     separators=",.",    
