@@ -191,7 +191,7 @@ treemap.update_layout(
 # TOP KPI's
 Menge_Lebensmittelabfall = int(df_selection["Menge"].sum())
 Kosten_Lebensmittelabfall = int(df_selection["Kosten"].sum())
-Entsorgungskosten = Menge_Lebensmittelabfall * 0.13 
+Entsorgungskosten = Menge_Lebensmittelabfall * 0.13
 
 KostenIntervall1 = round(Kosten_Lebensmittelabfall + Entsorgungskosten,0)
 KostenIntervall2 = round(Kosten_Lebensmittelabfall * 1.25 + Entsorgungskosten,0)
