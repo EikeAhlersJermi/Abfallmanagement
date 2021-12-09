@@ -264,6 +264,7 @@ produktionsmenge = px.line(
     x="KW",
     y="Produzierte Menge in KG", 
     color="BU",
+    
     color_discrete_map={
         "BU1":"#EF553B",
         "BU2":"#FFA15A",
@@ -278,14 +279,16 @@ produktionsmenge.update_layout(
     plot_bgcolor="rgba(0,0,0,0)",
     xaxis=(dict(showgrid=False)),
     separators=",.",
-    height=700, width=1500
-
+    height=700, width=1500,
+    
+    
 )
 produktionsmenge.update_traces(    
     selector=dict(type='bar'),
     hovertemplate=' %{value} ',
     
-    textposition='outside'
+    textposition='outside',
+    
 )
 # zeitlicher Verlauf [BAR CHART]
 verlauf = (
