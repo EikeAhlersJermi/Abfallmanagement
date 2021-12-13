@@ -72,7 +72,7 @@ st.sidebar.write("KW ", weekNumber_start, " - ", " KW " , weekNumber_end)
 BU = st.sidebar.multiselect(
     "Filter der BUs:",
     options=df["BU"].unique(),
-    default=df["BU"].unique()
+    default=df["BU"].unique(),
 )
 Symptom = st.sidebar.multiselect(
     "Wähle das Symptom aus:",
@@ -305,13 +305,14 @@ verlauf = px.bar(
 verlauf.update_layout(
     plot_bgcolor="rgba(0,0,0,0)",
     xaxis=(dict(showgrid=False)),
-    separators=",."    
+    separators=",.",
 )
 verlauf.update_traces(    
     selector=dict(type='bar'),
     hovertemplate=' %{value} kg',
     texttemplate='%{value}',
     textposition='outside',
+    textfont_size=20,
 )
 # Lebensmittelabfall BY Symptom [BAR CHART]
 Lebensmittelabfall_by_product_line = (
